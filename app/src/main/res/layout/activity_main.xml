@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    android:orientation="vertical"
+    tools:context="mx.edu.ittepic.compilador.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="2"
+        >
+
+        <EditText
+            android:id="@+id/ETcodigo"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:hint="Codigo"
+            android:inputType="textMultiLine"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            >
+
+            <ImageButton
+                android:id="@+id/BtnCompilar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/run"
+                android:src="@android:color/transparent"
+                android:text="lexico" />
+
+            <ImageButton
+                android:id="@+id/BtnTabla"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/table"
+                android:src="@android:color/transparent"
+                android:text="tabla" />
+
+            <ImageButton
+                android:id="@+id/BtnSeguimiento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/seg"
+                android:src="@android:color/transparent"
+                android:text="tabla" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/consola"
+        android:layout_weight="1"
+        />
+
+
+</LinearLayout>
