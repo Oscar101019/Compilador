@@ -764,24 +764,30 @@ public class AnalizadorSintactico {
             re[0]+= "Error sintactico, en la linea "+(nl+1)+". Sentencia incompleta para "+auxErrMsj(compLx[0])+". "
                     + "Solucion: colocar despues del \""+auxErrMsj(compLx[compLx.length-1])+"\" \""+text+"\"\n";
 
-
+            /*
             String f;
             if(g.t.efin==false){f="Estado NO Final";
                 avAutomata += "\n"+"Se encuentra en ->"+g.t.valor + "( "+ f+") " + "\n";
 
 
-            }
+            }*/
 
         }
         if(!sent.contains(";") /*&& acepPyC(compLx[0])*/){
             re[0]+= "Error sintactico, en la linea "+(nl+1)+". Te falto colocar un \';\':0. Solucion: Colocar el \';\' al final de la línea (:.\n";
-            String f;
+            /*String f;
             if(g.t.efin==false){f="Estado NO Final";
                 avAutomata += "\n"+"Se encuentra en ->"+g.t.valor + "( "+ f+") " + "\n";
 
 
-            }
+            }*/
         }
+        if(!text.equals("") || !sent.contains(";" )){  String f;
+            if(g.t.efin==false){f="Estado NO Final";
+                avAutomata += "\n"+"Se encuentra en ->"+g.t.valor + "( "+ f+") " + "\n";
+
+
+            }}
         return "";
     }
     //-----------------------------------------------------
