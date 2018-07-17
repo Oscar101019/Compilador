@@ -14,7 +14,7 @@ public class AnalizadorSintactico {
     //Array de grafos para la sintaxis
     Grafo g;
     //Arreglo con erroresy secuencia de gramatica para donde se necesite
-    String[]re;
+    String[] re;
 
     //Apuntador de la tabla de simboloes
     public Hashtable<String, Simbolo> tablaSimbolos;
@@ -24,7 +24,7 @@ public class AnalizadorSintactico {
     public String avAutomata;
     public String avGramatica;
 
-    public AnalizadorSintactico(ArrayList<LineaCod> ln){
+    public AnalizadorSintactico(ArrayList<LineaCod> ln) {
         codSM = new String[ln.size()];
         codM = new String[ln.size()];
         re = new String[2];
@@ -32,7 +32,7 @@ public class AnalizadorSintactico {
         cambiarCod(ln);
     }
 
-    public AnalizadorSintactico(ArrayList<LineaCod> ln, Hashtable<String, Simbolo> tablaSimbolos){
+    public AnalizadorSintactico(ArrayList<LineaCod> ln, Hashtable<String, Simbolo> tablaSimbolos) {
         codSM = new String[ln.size()];
         codM = new String[ln.size()];
         this.tablaSimbolos = tablaSimbolos;
@@ -42,48 +42,48 @@ public class AnalizadorSintactico {
     }
 
     //Metodo para cmbiar los lexemas del codigo por tokens
-    private void cambiarCod(ArrayList<LineaCod> ln){
+    private void cambiarCod(ArrayList<LineaCod> ln) {
         String cadSM = "";
         String cadM = "";
         String temp;
-        for(int x = 0; x < ln.size(); x++){
+        for (int x = 0; x < ln.size(); x++) {
             cadSM = "";
             cadM = "";
-            if(ln.get(x).tokens.isEmpty()){
+            if (ln.get(x).tokens.isEmpty()) {
                 cadM += "i";
             }
-            for(int y = 0; y < ln.get(x).tokens.size(); y++){
+            for (int y = 0; y < ln.get(x).tokens.size(); y++) {
                 temp = ln.get(x).tokens.get(y);
-                switch(temp.substring(1, temp.indexOf(","))){
-                    case "Tipo de Dato":{
+                switch (temp.substring(1, temp.indexOf(","))) {
+                    case "Tipo de Dato": {
                         cadM += "TD ";
                         break;
                     }
-                    case "Variable del Sistema":{
+                    case "Variable del Sistema": {
                         cadM += "VS ";
                         break;
                     }
-                    case "Operador Lógico":{
+                    case "Operador Lógico": {
                         cadM += "OL ";
                         break;
                     }
-                    case "Operador Relacional":{
+                    case "Operador Relacional": {
                         cadM += "OR ";
                         break;
                     }
-                    case "Operador de Asignación":{
+                    case "Operador de Asignación": {
                         cadM += "OA ";
                         break;
                     }
-                    case "Identificador":{
+                    case "Identificador": {
                         cadM += "ID ";
                         break;
                     }
-                    case "Cadena":{
+                    case "Cadena": {
                         cadM += "LT ";
                         break;
                     }
-                    case "Número":{
+                    case "Número": {
                         cadM += "NU ";
                         break;
                     }
@@ -91,24 +91,24 @@ public class AnalizadorSintactico {
                             cadM += "OAR ";
                             break;
                         }*/
-                    case "Valor booleano":{
+                    case "Valor booleano": {
                         cadM += "BOO ";
                         break;
                     }
-                    default:{
-                        cadM += temp.substring(temp.indexOf(",")+2, temp.indexOf(">")).toUpperCase()+" ";
+                    default: {
+                        cadM += temp.substring(temp.indexOf(",") + 2, temp.indexOf(">")).toUpperCase() + " ";
                     }
                 }
                 temp = ln.get(x).tokens.get(y);
-                temp = temp.substring(temp.indexOf(",")+2, temp.indexOf(">"));
-                cadSM += temp+" ";
+                temp = temp.substring(temp.indexOf(",") + 2, temp.indexOf(">"));
+                cadSM += temp + " ";
             }
             codM[x] = cadM;
             codSM[x] = cadSM;
         }
     }
 
-    private Gramatica crearGramatica(String[]p, String pI, String[]n, String[]t){
+    private Gramatica crearGramatica(String[] p, String pI, String[] n, String[] t) {
         Gramatica gramatica = new Gramatica();
         //Aignar la producciones
         gramatica.setP(p);
@@ -121,25 +121,25 @@ public class AnalizadorSintactico {
         return gramatica;
     }
 
-    public String[] compilar(){
+    public String[] compilar() {
         String sent = "";
-        for(int nl = 0; nl < codM.length; nl++){
+        for (int nl = 0; nl < codM.length; nl++) {
             sent = codM[nl];
-            while(!sent.equals("i") && !sent.equals("")){
-                switch(sent.substring(0, sent.indexOf(" "))){
-                    case "FUNCION":{
+            while (!sent.equals("i") && !sent.equals("")) {
+                switch (sent.substring(0, sent.indexOf(" "))) {
+                    case "FUNCION": {
                         aSFUNCIONes();
                         sent = valAutomata(sent, nl);
-                        if(!buscarLlave("FUNCION", nl)){
+                        if (!buscarLlave("FUNCION", nl)) {
                             String nomFunc = "";
-                            String[]auxArr = codM[nl].split(" ");
-                            for(int i = 0; i < auxArr.length; i++){
-                                if(auxArr[i].equals("ID")){
+                            String[] auxArr = codM[nl].split(" ");
+                            for (int i = 0; i < auxArr.length; i++) {
+                                if (auxArr[i].equals("ID")) {
                                     nomFunc = codSM[nl].split(" ")[i];
                                     break;
                                 }
                             }
-                            re[0] += "Error sintactico, en la linea "+(nl+1)+". Metodo "+nomFunc+" sin \"}\". Solucion: agregar \"}\".\n";
+                            re[0] += "Error sintactico, en la linea " + (nl + 1) + ". Metodo " + nomFunc + " sin \"}\". Solucion: agregar \"}\".\n";
                         }
                         break;
                     }
@@ -158,129 +158,129 @@ public class AnalizadorSintactico {
                         sent="";
                         break;
                     }*/
-                    case "CICLO":{
+                    case "CICLO": {
                         aSCICLO();
                         sent = valAutomata(sent, nl);
                         break;
                     }
 
 
-
-                    case "SI":{
+                    case "SI": {
                         aSGramatica();
                         valIf(nl, sent);
                         sent = "";
                         break;
                     }
 
-                    case "TD":{
+                    case "TD": {
                         aSGramatica();
                         valIn(nl, sent);
                         sent = "";
                         break;
                     }
-                    case "ID":{
+                    case "ID": {
                         aSGramatica();
                         valAs(nl, sent);
                         sent = "";
                         break;
                     }
 
-                    case "INICIO":{
+                    case "INICIO": {
                         aSPow();
                         sent = valAutomata(sent, nl);
-                        if(!buscarLlave("INICIO", nl)){
+                        if (!buscarLlave("INICIO", nl)) {
                             String nomFunc = "";
-                            String[]auxArr = codM[nl].split(" ");
-                            for(int i = 0; i < auxArr.length; i++){
-                                if(auxArr[i].equals("ID")){
+                            String[] auxArr = codM[nl].split(" ");
+                            for (int i = 0; i < auxArr.length; i++) {
+                                if (auxArr[i].equals("ID")) {
                                     nomFunc = codSM[nl].split(" ")[i];
                                     break;
                                 }
                             }
-                            re[0] += "Error sintactico, en la linea "+(nl+1)+". INICIO "+nomFunc+" sin \"}\". Solucion: agregar \"}\".\n";
+                            re[0] += "Error sintactico, en la linea " + (nl + 1) + ". INICIO " + nomFunc + " sin \"}\". Solucion: agregar \"}\".\n";
                         }
                         break;
                     }
-                    case "RUTA":{
+                    case "RUTA": {
                         aSRuta();
                         sent = valAutomata(sent, nl);
-                        if(!buscarLlave("INICIO", nl)){
+                        if (!buscarLlave("INICIO", nl)) {
                             String nomFunc = "";
-                            String[]auxArr = codM[nl].split(" ");
-                            for(int i = 0; i < auxArr.length; i++){
-                                if(auxArr[i].equals("ID")){
+                            String[] auxArr = codM[nl].split(" ");
+                            for (int i = 0; i < auxArr.length; i++) {
+                                if (auxArr[i].equals("ID")) {
                                     nomFunc = codSM[nl].split(" ")[i];
                                     break;
                                 }
                             }
-                            re[0] += "Error sintactico, en la linea "+(nl+1)+". RUTA "+nomFunc+" sin \"}\". Solucion: agregar \"}\".\n";
+                            re[0] += "Error sintactico, en la linea " + (nl + 1) + ". RUTA " + nomFunc + " sin \"}\". Solucion: agregar \"}\".\n";
                         }
                         break;
                     }
-                    case "GARRA.ABRIR":{
+                    case "GARRA.ABRIR": {
                         aSGarra();
                         sent = valAutomata(sent, nl);
                         break;
                     }
-                    case "GARRA.CERRAR":{
+                    case "GARRA.CERRAR": {
                         aSGarraCerrar();
                         sent = valAutomata(sent, nl);
                         break;
                     }
-                    case "GARRA.IZQUIERDA":{
+                    case "GARRA.IZQUIERDA": {
                         aSGarraIzquierda();
                         sent = valAutomata(sent, nl);
                         break;
                     }
-                    case "GARRA.DERECHA":{
+                    case "GARRA.DERECHA": {
                         aSGarraDerecha();
                         sent = valAutomata(sent, nl);
                         break;
                     }
-                    case "GARRA.ABAJO":{
+                    case "GARRA.ABAJO": {
                         aSGarraAbajo();
                         sent = valAutomata(sent, nl);
                         break;
                     }
-                    case "GARRA.ARRIBA":{
+                    case "GARRA.ARRIBA": {
                         aSGarraArriba();
                         sent = valAutomata(sent, nl);
                         break;
                     }
-                    case "CARRO.ENCENDER":{
+                    case "CARRO.ENCENDER": {
                         aSCarroEncender();
                         sent = valAutomata(sent, nl);
                         break;
                     }
-                    case "CARRO.APAGAR":{
+                    case "CARRO.APAGAR": {
                         aSCarroApagar();
                         sent = valAutomata(sent, nl);
                         break;
                     }
-                    case "CARRO.IZQUIERDA":{
+                    case "CARRO.IZQUIERDA": {
                         aSCarroIzquierda();
                         sent = valAutomata(sent, nl);
                         break;
                     }
-                    case "CARRO.DERECHA":{
+                    case "CARRO.DERECHA": {
                         aSCarroDerecha();
                         sent = valAutomata(sent, nl);
                         break;
                     }
-                    case "CARRO.ATRAS":{
+                    case "CARRO.ATRAS": {
                         aSCarroAtras();
                         sent = valAutomata(sent, nl);
                         break;
                     }
-                    case "CARRO.ADELANTE":{
+                    case "CARRO.ADELANTE": {
                         aSCarroAdelante();
                         sent = valAutomata(sent, nl);
                         break;
                     }
-                    default:{
-                        re[0] += "Error sintactico, en la linea "+(nl+1)+". Sentencia sin especficar se obtuvo un "+auxErrMsj(sent.substring(0, sent.indexOf(" ")))
-                                +" ("+lex(nl, 0)+"). Solucion: Eliminar el codigo \""+codSM[nl]+"\" de la linea "+(nl+1)+".\n"; ;
+                    default: {
+                        re[0] += "Error sintactico, en la linea " + (nl + 1) + ". Sentencia sin especficar se obtuvo un " + auxErrMsj(sent.substring(0, sent.indexOf(" ")))
+                                + " (" + lex(nl, 0) + "). Solucion: Eliminar el codigo \"" + codSM[nl] + "\" de la linea " + (nl + 1) + ".\n";
+                        ;
                         sent = "";
                     }
                 }
@@ -289,10 +289,10 @@ public class AnalizadorSintactico {
         return re;
     }
 
-    
-    public boolean buscarIf(int nl){
-        for(int i = nl; i >= 0; i--){
-            if(codM[i].contains("SI ")){
+
+    public boolean buscarIf(int nl) {
+        for (int i = nl; i >= 0; i--) {
+            if (codM[i].contains("SI ")) {
                 codM[i] = codM[i].replace("SI ", "");
                 codSM[i] = codM[i].replace("SI ", "");
                 return true;
@@ -301,19 +301,19 @@ public class AnalizadorSintactico {
         return false;
     }
 
-    public boolean buscarLlave(String tipSent, int nl){
+    public boolean buscarLlave(String tipSent, int nl) {
         int contador = 1;
         codM[nl] = codM[nl].replaceFirst("\\{ ", "");
         codSM[nl] = codSM[nl].replaceFirst("\\{ ", "");
-        for(int i = nl; i < codM.length; i++){
-            for(int j = 0; j < codM[i].length(); j++){
-                if(codM[i].charAt(j) == '{'){
+        for (int i = nl; i < codM.length; i++) {
+            for (int j = 0; j < codM[i].length(); j++) {
+                if (codM[i].charAt(j) == '{') {
                     contador++;
                 }
-                if(codM[i].charAt(j) == '}'){
+                if (codM[i].charAt(j) == '}') {
                     contador--;
                 }
-                if(contador == 0){
+                if (contador == 0) {
                     codM[i] = codM[i].replaceFirst("\\} ", "");
                     codSM[i] = codSM[i].replaceFirst("\\} ", "");
                     return true;
@@ -323,16 +323,16 @@ public class AnalizadorSintactico {
         return false;
     }
 
-    public String lex(int nl, int index){
+    public String lex(int nl, int index) {
         String temp[] = codSM[nl].split(" ");
         return temp[index];
     }
 
-    public void elmSentcodSM(int nl, int noCompLex){
+    public void elmSentcodSM(int nl, int noCompLex) {
         String temp = "";
         String arrAux[] = codSM[nl].split(" ");
-        for(int i = 0; i < noCompLex; i++){
-            temp += arrAux[i]+" ";
+        for (int i = 0; i < noCompLex; i++) {
+            temp += arrAux[i] + " ";
         }
         codSM[nl] = codSM[nl].substring(temp.length());
     }
@@ -350,7 +350,12 @@ public class AnalizadorSintactico {
     }
     */
     //--------------------- Automatas ---------------------
+
+
+    String nombre = "";
     public void aSFUNCIONes(){
+
+        nombre="FUNCIONES";
         g = new Grafo();
         g.insertar("q0", true, false);
         g.insertar("q1", false, false);
@@ -392,8 +397,10 @@ public class AnalizadorSintactico {
 
 
 
-
     public void aSCICLO(){
+
+        nombre="CICLO";
+
         g = new Grafo();
         g.insertar("q0", true, false);
         g.insertar("q1", false, false);
@@ -402,14 +409,21 @@ public class AnalizadorSintactico {
         g.insertar("q4", false, false);
         g.insertar("q5", false, true);
 
+        g.insertar("q6", false, true);
+
         g.crearArista("q0", "q1", "CICLO");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
         g.crearArista("q3", "q4", ")");
         g.crearArista("q4", "q5", ";");
+
+
     }
 
     public void aSGarra(){
+        nombre="GARRA.ABRIR";
+
+
         g = new Grafo();
         g.insertar("q0", true, false);
         g.insertar("q1", false, false);
@@ -429,6 +443,7 @@ public class AnalizadorSintactico {
     }
 
     public void aSGarraCerrar(){
+        nombre="GARRA.CERRAR";
         g = new Grafo();
         g.insertar("q0", true, false);
         g.insertar("q1", false, false);
@@ -446,6 +461,7 @@ public class AnalizadorSintactico {
 
 
     public void aSGarraDerecha(){
+        nombre="GARRA.DERECHA";
         g = new Grafo();
         g.insertar("q0", true, false);
         g.insertar("q1", false, false);
@@ -462,6 +478,8 @@ public class AnalizadorSintactico {
     }
 
     public void aSGarraIzquierda(){
+        nombre="GARRA.IZQUIERDA";
+
         g = new Grafo();
         g.insertar("q0", true, false);
         g.insertar("q1", false, false);
@@ -479,6 +497,7 @@ public class AnalizadorSintactico {
 
     public void aSGarraArriba(){
         g = new Grafo();
+        nombre="GARRA.ARRIBA";
         g.insertar("q0", true, false);
         g.insertar("q1", false, false);
         g.insertar("q2", false, false);
@@ -494,6 +513,7 @@ public class AnalizadorSintactico {
     }
 
     public void aSGarraAbajo(){
+        nombre="GARRA.ABAJO";
         g = new Grafo();
         g.insertar("q0", true, false);
         g.insertar("q1", false, false);
@@ -512,6 +532,7 @@ public class AnalizadorSintactico {
 
 
     public void aSCarroEncender(){
+        nombre="CARRO.ENCENDER";
         g = new Grafo();
         g.insertar("q0", true, false);
         g.insertar("q1", false, false);
@@ -529,6 +550,7 @@ public class AnalizadorSintactico {
 
 
     public void aSCarroApagar(){
+        nombre="CARRO.APAGAR";
         g = new Grafo();
         g.insertar("q0", true, false);
         g.insertar("q1", false, false);
@@ -547,6 +569,7 @@ public class AnalizadorSintactico {
 
     public void aSCarroIzquierda(){
         g = new Grafo();
+        nombre="CARRO.IZQUIERDA";
         g.insertar("q0", true, false);
         g.insertar("q1", false, false);
         g.insertar("q2", false, false);
@@ -562,6 +585,7 @@ public class AnalizadorSintactico {
     }
 
     public void aSCarroDerecha(){
+        nombre="CARRO.DERECHA";
         g = new Grafo();
         g.insertar("q0", true, false);
         g.insertar("q1", false, false);
@@ -578,6 +602,7 @@ public class AnalizadorSintactico {
     }
 
     public void aSCarroAtras(){
+        nombre="CARRO.ATRAS";
         g = new Grafo();
         g.insertar("q0", true, false);
         g.insertar("q1", false, false);
@@ -595,6 +620,7 @@ public class AnalizadorSintactico {
 
 
     public void aSCarroAdelante(){
+        nombre="CARRO.ADELANTE";
         g = new Grafo();
         g.insertar("q0", true, false);
         g.insertar("q1", false, false);
@@ -616,6 +642,7 @@ public class AnalizadorSintactico {
 
     public void aSIn(){
         g = new Grafo();
+
         g.insertar("q0", true, false);
         g.insertar("q1", false, false);
         g.insertar("q2", false, true);
@@ -625,6 +652,7 @@ public class AnalizadorSintactico {
     }
 
     public void aSPow(){
+        nombre="INICIO";
         g = new Grafo();
         g.insertar("q0", true, false);
         g.insertar("q1", false, false);
@@ -637,6 +665,7 @@ public class AnalizadorSintactico {
     }
 
     public void aSRuta(){
+        nombre="RUTA";
         g = new Grafo();
         g.insertar("q0", true, false);
         g.insertar("q1", false, false);
@@ -646,9 +675,10 @@ public class AnalizadorSintactico {
         g.crearArista("q1", "q2", "{");
     }
 
+
     //El numero de linea se tiene que calcular con noLinea+1, ya que noLinea es del for que empieza en 0 y en 1
     public String valAutomata(String sent, int nl){
-        avAutomata += "\nAutomata de la linea "+nl+". ";
+        avAutomata += "\nAutomata de la linea "+(nl+1)+" , "+nombre+" . ";
         //comLx es una variable que tiene los componente lexico de la sentencia
         String[]compLx = sent.split(" ");
         g.t = g.ini;
@@ -672,10 +702,23 @@ public class AnalizadorSintactico {
             //Verifica si se puede avanzar con el lexema actual de la sentencia, si es asi entonces avanza y sigue en la siguiente iteracion
             if(g.mover(compLx[i])){
                 //Aguarda estados...
-                avAutomata += "-> "+g.t.valor;
+                String f,nf;
+
+                avAutomata += "\n"+"->"+g.t.valor + "\n";
+
+                if(g.t.efin==true){nf= "Estado Final";
+                    avAutomata += "\n"+"Se encuentra en ->"+g.t.valor + "( "+ nf+") " + "\n";
+
+                    continue;
+                }
+
 
                 auxSent += compLx[i]+" ";
                 continue;
+
+
+
+
             }else if (g.mover("")){
                 continue;
             }
@@ -686,6 +729,13 @@ public class AnalizadorSintactico {
             text = text.substring(2);
             re[0]+= "Error sintactico, en la linea "+(nl+1)+". Sentencia incorrecta para "+auxErrMsj(compLx[0])+", se obtuvo un "+auxErrMsj(compLx[i])
                     +"(\""+lex(nl, i)+"\"). Solucion: colocar despues del \""+auxErrMsj(compLx[i-1])+"\" \""+text+"\".\n";
+            String f;
+            if(g.t.efin==false){f="Estado NO Final";
+                avAutomata += "\n"+"Se encuentra en ->"+g.t.valor + "( "+ f+") " + "\n";
+
+
+            }
+
             return "";
         }
         //Se pregunta si es estado final ya que solo hubo una sentencia por linea
@@ -713,9 +763,24 @@ public class AnalizadorSintactico {
             text = text.substring(2);
             re[0]+= "Error sintactico, en la linea "+(nl+1)+". Sentencia incompleta para "+auxErrMsj(compLx[0])+". "
                     + "Solucion: colocar despues del \""+auxErrMsj(compLx[compLx.length-1])+"\" \""+text+"\"\n";
+
+
+            String f;
+            if(g.t.efin==false){f="Estado NO Final";
+                avAutomata += "\n"+"Se encuentra en ->"+g.t.valor + "( "+ f+") " + "\n";
+
+
+            }
+
         }
         if(!sent.contains(";") /*&& acepPyC(compLx[0])*/){
             re[0]+= "Error sintactico, en la linea "+(nl+1)+". Te falto colocar un \';\':0. Solucion: Colocar el \';\' al final de la línea (:.\n";
+            String f;
+            if(g.t.efin==false){f="Estado NO Final";
+                avAutomata += "\n"+"Se encuentra en ->"+g.t.valor + "( "+ f+") " + "\n";
+
+
+            }
         }
         return "";
     }
