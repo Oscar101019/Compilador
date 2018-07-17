@@ -79,7 +79,7 @@ public class AnalizadorSintactico {
                         cadM += "ID ";
                         break;
                     }
-                    case "Literal de Texto":{
+                    case "Cadena":{
                         cadM += "LT ";
                         break;
                     }
@@ -757,7 +757,7 @@ public class AnalizadorSintactico {
         String[]n = {"e","t","f","g","h"};
         gr.setN(n);
         //Asignar terminales I = ID, N = NUMERAO
-        String[]t = {"I","N","L","R","L","B"};
+        String[]t = {"I","N","L","R","T","B"};
         gr.setT(t);
     }
 

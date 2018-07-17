@@ -169,7 +169,7 @@ public class ArbolBinario {
             return new Simbolo("ERR","ERR",0);
         }
         
-        if(!(op1.tipo+"").equals("ID")){
+        if((op1.tipo+"").equals("ID")){
             if(!tablaSimbolos.containsKey(op1.valor+"")){
                 err+="Error semantico, en la linea "+(op1.fila+1)+". Variable \""+op1.valor+"\" inexistente en el programa. Solucion crear la variable lol.\n";
                 return new Simbolo("ERR","ERR",0);
@@ -188,7 +188,7 @@ public class ArbolBinario {
             return new Simbolo("ERR","ERR",0);
         }
         
-        if(!(op2.tipo+"").equals("ID")){
+        if((op2.tipo+"").equals("ID")){
             if(!tablaSimbolos.containsKey(op2.valor+"")){
                 err+="Error semantico, en la linea "+(op1.fila+1)+". Variable \""+op2.valor+"\" inexistente en el programa. Solucion crear la variable lol.\n";
                 return new Simbolo("ERR","ERR",0);
