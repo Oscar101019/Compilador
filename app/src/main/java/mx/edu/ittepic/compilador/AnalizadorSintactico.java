@@ -704,10 +704,10 @@ public class AnalizadorSintactico {
                 //Aguarda estados...
                 String f,nf;
 
-                avAutomata += "\n"+"->"+g.t.valor + "\n";
+                avAutomata += "\n"+"->"+g.t.valor ;
 
                 if(g.t.efin==true){nf= "Estado Final";
-                    avAutomata += "\n"+"Se encuentra en ->"+g.t.valor + "( "+ nf+") " + "\n";
+                    avAutomata += "\n"+"El automata "+nombre+" Se encuentra en el estado -> "+g.t.valor + "( "+ nf+") " + "\n";
 
                     continue;
                 }
@@ -731,7 +731,7 @@ public class AnalizadorSintactico {
                     +"(\""+lex(nl, i)+"\"). Solucion: colocar despues del \""+auxErrMsj(compLx[i-1])+"\" \""+text+"\".\n";
             String f;
             if(g.t.efin==false){f="Estado NO Final";
-                avAutomata += "\n"+"Se encuentra en ->"+g.t.valor + "( "+ f+") " + "\n";
+                avAutomata += "\n"+"El automata "+nombre+" Se encuentra en el estado -> "+g.t.valor + "( "+ f+") " + "\n";
 
 
             }
@@ -784,7 +784,7 @@ public class AnalizadorSintactico {
         }
         if(!text.equals("") || !sent.contains(";" )){  String f;
             if(g.t.efin==false){f="Estado NO Final";
-                avAutomata += "\n"+"Se encuentra en ->"+g.t.valor + "( "+ f+") " + "\n";
+                avAutomata += "\n"+"El automata "+nombre+" Se encuentra en el estado -> "+g.t.valor + "( "+ f+") " + "\n";
 
 
             }}
