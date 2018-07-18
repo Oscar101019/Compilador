@@ -423,6 +423,7 @@ public class AnalizadorSintactico {
         g.crearArista("q0", "q1", "CICLO");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
+        g.crearArista("q2", "q3", "ID");
         g.crearArista("q3", "q4", ")");
         g.crearArista("q4", "q5", "{");
 
@@ -444,6 +445,7 @@ public class AnalizadorSintactico {
         g.crearArista("q0", "q1", "GARRA.ABRIR");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
+        g.crearArista("q2", "q3", "ID");
         g.crearArista("q3", "q4", ")");
         g.crearArista("q4", "q5", ";");
 
@@ -464,6 +466,7 @@ public class AnalizadorSintactico {
         g.crearArista("q0", "q1", "GARRA.CERRAR");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
+        g.crearArista("q2", "q3", "ID");
         g.crearArista("q3", "q4", ")");
         g.crearArista("q4", "q5", ";");
     }
@@ -482,6 +485,7 @@ public class AnalizadorSintactico {
         g.crearArista("q0", "q1", "GARRA.DERECHA");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
+        g.crearArista("q2", "q3", "ID");
         g.crearArista("q3", "q4", ")");
         g.crearArista("q4", "q5", ";");
     }
@@ -500,6 +504,7 @@ public class AnalizadorSintactico {
         g.crearArista("q0", "q1", "GARRA.IZQUIERDA");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
+        g.crearArista("q2", "q3", "ID");
         g.crearArista("q3", "q4", ")");
         g.crearArista("q4", "q5", ";");
     }
@@ -517,6 +522,7 @@ public class AnalizadorSintactico {
         g.crearArista("q0", "q1", "GARRA.ARRIBA");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
+        g.crearArista("q2", "q3", "ID");
         g.crearArista("q3", "q4", ")");
         g.crearArista("q4", "q5", ";");
     }
@@ -534,6 +540,7 @@ public class AnalizadorSintactico {
         g.crearArista("q0", "q1", "GARRA.ABAJO");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
+        g.crearArista("q2", "q3", "ID");
         g.crearArista("q3", "q4", ")");
         g.crearArista("q4", "q5", ";");
     }
@@ -589,6 +596,7 @@ public class AnalizadorSintactico {
         g.crearArista("q0", "q1", "CARRO.IZQUIERDA");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
+        g.crearArista("q2", "q3", "ID");
         g.crearArista("q3", "q4", ")");
         g.crearArista("q4", "q5", ";");
     }
@@ -606,6 +614,7 @@ public class AnalizadorSintactico {
         g.crearArista("q0", "q1", "CARRO.DERECHA");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
+        g.crearArista("q2", "q3", "ID");
         g.crearArista("q3", "q4", ")");
         g.crearArista("q4", "q5", ";");
     }
@@ -623,6 +632,7 @@ public class AnalizadorSintactico {
         g.crearArista("q0", "q1", "CARRO.ATRAS");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
+        g.crearArista("q2", "q3", "ID");
         g.crearArista("q3", "q4", ")");
         g.crearArista("q4", "q5", ";");
     }
@@ -641,6 +651,7 @@ public class AnalizadorSintactico {
         g.crearArista("q0", "q1", "CARRO.ADELANTE");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
+        g.crearArista("q2", "q3", "ID");
         g.crearArista("q3", "q4", ")");
         g.crearArista("q4", "q5", ";");
     }
