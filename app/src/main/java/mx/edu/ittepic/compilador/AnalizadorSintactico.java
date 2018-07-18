@@ -161,6 +161,17 @@ public class AnalizadorSintactico {
                     case "CICLO": {
                         aSCICLO();
                         sent = valAutomata(sent, nl);
+                        if (!buscarLlave("CICLO", nl)) {
+                            String nomFunc = "";
+                            String[] auxArr = codM[nl].split(" ");
+                            for (int i = 0; i < auxArr.length; i++) {
+                                if (auxArr[i].equals("ID")) {
+                                    nomFunc = codSM[nl].split(" ")[i];
+                                    break;
+                                }
+                            }
+                            re[0] += "Error sintactico, en la linea " + (nl + 1) + ". CICLO " + nomFunc + " sin \"}\". Solucion: agregar \"}\".\n";
+                        }
                         break;
                     }
 
@@ -204,7 +215,7 @@ public class AnalizadorSintactico {
                     case "RUTA": {
                         aSRuta();
                         sent = valAutomata(sent, nl);
-                        if (!buscarLlave("INICIO", nl)) {
+                        if (!buscarLlave("RUTA", nl)) {
                             String nomFunc = "";
                             String[] auxArr = codM[nl].split(" ");
                             for (int i = 0; i < auxArr.length; i++) {
@@ -409,13 +420,11 @@ public class AnalizadorSintactico {
         g.insertar("q4", false, false);
         g.insertar("q5", false, true);
 
-        g.insertar("q6", false, true);
-
         g.crearArista("q0", "q1", "CICLO");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
         g.crearArista("q3", "q4", ")");
-        g.crearArista("q4", "q5", ";");
+        g.crearArista("q4", "q5", "{");
 
 
     }
