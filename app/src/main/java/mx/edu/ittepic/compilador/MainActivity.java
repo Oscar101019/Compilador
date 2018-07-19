@@ -150,8 +150,25 @@ public class MainActivity extends AppCompatActivity {
 
                 consola.setText(textErr);
 
+
+
+
                 if(textErr.equals("")){
                     consola.setText("Compilado con exito!!");
+                }
+
+                if(!re[1].equals("")){
+                    textErr += re[1];
+                }
+                if(!errAnalSint[0].equals("")){
+                    textErr += errAnalSint[0];
+                }else{
+                    GeneradorDeCodigo gc = new GeneradorDeCodigo();
+                    as = new AnalizadorSintactico(al.secCod, AnalizadorLexico.tablaSimbolos);
+                    //Codigo intermedio
+                    gc.convrt(as.codSM, as.codM);
+                    //Codigo optimizados
+                    // String codigoOpt = gc.opt();
                 }
 
             }//onClick
