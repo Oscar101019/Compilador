@@ -59,6 +59,12 @@ public class AnalizadorSemantico {
                         val+=arr[j];
                     }
                     String idObj = aux[3].split(" ")[1];
+
+                    if(tablaSimbolos.get(idObj).valor!=null){
+                        err[0] += "Error semantico, en la linea "+(Integer.parseInt(aux[0])+1)+". La variable \""+idObj+"\" ya ha sido declarada. Solucion: Verificar la declaracion anterior de la variable.\n";
+                        break;
+                    }
+
                     tablaSimbolos.get(idObj).valor = val;
                     break;
                 }
@@ -72,24 +78,31 @@ public class AnalizadorSemantico {
                         temp = tablaSimbolos.get(temp.valor+"");
                     }
 
-                    if(tablaSimbolos.get(aux[3].split(" ")[0]).valor!= temp.valor){
+                    try{
+                        if(tablaSimbolos.get(aux[3].split(" ")[0]).valor!= temp.valor){
+                            String idObj = aux[3].split(" ")[1];
+                            tablaSimbolos.put(idObj,temp);
+                        }
+
+                        String tipo = (String)tablaSimbolos.get(aux[3].split(" ")[0]).tipo;
+                        if(!auxErr(temp.tipo.toString()).equals(tipo) && !auxErr(temp.tipo.toString()).equals("ERR")){
+                            err[0] += "Error semantico, en la linea "+(Integer.parseInt(aux[0])+1)+". La estructura IF solo acepta valores boolenos. Solucion: Verificar la condicion del IF.\n";
+                        }
+
+                        String val = "";
+                        String[]arr = aux[3].split(" ");
+                        for(int j = 2; j<arr.length-1;j++){
+                            val+=arr[j];
+                        }
                         String idObj = aux[3].split(" ")[1];
-                        tablaSimbolos.put(idObj,temp);
+                        tablaSimbolos.get(idObj).valor = val;
+                        break;
+
+                    }catch (NullPointerException e){
+                        err[0] += "Error semantico, en la linea "+(Integer.parseInt(aux[0])+1)+". La variable no existe. Solucion: Debe declarar la variable antes de reasignar valor\n";
+
                     }
 
-                    String tipo = (String)tablaSimbolos.get(aux[3].split(" ")[0]).tipo;
-                    if(!auxErr(temp.tipo.toString()).equals(tipo) && !auxErr(temp.tipo.toString()).equals("ERR")){
-                        err[0] += "Error semantico, en la linea "+(Integer.parseInt(aux[0])+1)+". La estructura IF solo acepta valores boolenos. Solucion: Verificar la condicion del IF.\n";
-                    }
-
-                    String val = "";
-                    String[]arr = aux[3].split(" ");
-                    for(int j = 2; j<arr.length-1;j++){
-                        val+=arr[j];
-                    }
-                    String idObj = aux[3].split(" ")[1];
-                    tablaSimbolos.get(idObj).valor = val;
-                    break;
                 }
             }
         }
