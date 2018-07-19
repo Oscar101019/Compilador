@@ -149,7 +149,14 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 consola.setText(textErr);
-                }//onClick
+
+                if(textErr.equals("")){
+                    consola.setText("Compilado con exito!!");
+                }
+
+            }//onClick
+
+
         });
 
 
