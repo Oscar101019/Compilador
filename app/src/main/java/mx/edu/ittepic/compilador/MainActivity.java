@@ -31,7 +31,7 @@ import mx.edu.ittepic.compilador.Automatas.Valor_booleano;
 
 public class MainActivity extends AppCompatActivity {
     EditText codigo,consola;
-    ImageButton BtnCompilar,BtnTabla,BtnSeguimiento;
+    ImageButton BtnCompilar,BtnTabla,BtnTablaS,BtnSeguimiento;
     Token tokens[];
     int linea;
     ListView LvSeg;
@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static String seguimientoAutomata = "";
     public static String seguimientoGramatica = "";
+    public  String[] nombre;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         BtnSeguimiento = (ImageButton)findViewById(R.id.BtnSeguimiento);
         BtnCompilar = (ImageButton)findViewById(R.id.BtnCompilar);
         BtnTabla = (ImageButton) findViewById(R.id.BtnTabla);
+        BtnTablaS = (ImageButton) findViewById(R.id.BtnTablaS);
         LvSeg = (ListView)findViewById(R.id.LvSeguimiento);
 
         BtnCompilar.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 seguimientoAutomata = as.avAutomata;
                 seguimientoGramatica = as.avGramatica;
 
+
                 if(!errAnalSint[0].equals("")){
                     textErr += errAnalSint[0];
                 }
@@ -156,6 +159,28 @@ public class MainActivity extends AppCompatActivity {
                 Intent i=new Intent(MainActivity.this,Tabla.class);
                 i.putExtra("tokens", tokens);
                 startActivity(i);
+            }
+        });
+
+        BtnTablaS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String g[]=seguimientoAutomata.split("%");
+                String rec[] = new String[g.length];
+                String estado[] = new String[g.length];
+                for(int i=0;i<g.length;i++){
+                 String a[]=g[i].split(" ");
+                   rec[i]=a[0];
+                   // estado[i]=a[1];
+                 //   System.out.print(a[i].toString());
+                   System.out.print(rec[i].toString());
+                }
+
+                Intent i=new Intent(MainActivity.this,TablaS.class);
+                i.putExtra("seguimiento", g);
+                i.putExtra("imagen", rec);
+                startActivity(i);
+
             }
         });
 

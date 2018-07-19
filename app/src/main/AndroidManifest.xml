@@ -24,6 +24,12 @@
         <activity android:name=".Automata"
             android:screenOrientation="landscape"
             ></activity>
+        <activity android:name=".Automata2"
+            android:screenOrientation="landscape"
+            ></activity>
+        <activity android:name=".TablaS"
+            android:screenOrientation="landscape"
+            ></activity>
     </application>
 
 </manifest>

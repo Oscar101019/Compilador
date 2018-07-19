@@ -47,6 +47,15 @@
                 android:text="tabla" />
 
             <ImageButton
+                android:id="@+id/BtnTablaS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/table"
+                android:src="@android:color/transparent"
+                android:text="tabla"
+                android:tint="?attr/colorAccent" />
+
+            <ImageButton
                 android:id="@+id/BtnSeguimiento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -59,12 +68,12 @@
 
 
     </LinearLayout>
+
     <EditText
+        android:id="@+id/consola"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/consola"
-        android:layout_weight="1"
-        />
+        android:layout_weight="1" />
 
 
 </LinearLayout>

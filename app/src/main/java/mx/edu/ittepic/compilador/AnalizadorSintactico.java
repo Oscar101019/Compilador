@@ -9,6 +9,8 @@ public class AnalizadorSintactico {
     public String[] codSM;
     //Codigo transformado a tokens 
     public String[] codM;
+
+    public String[] nombreA;
     //Array de gramaticas para la sintaxis
     Gramatica gr;
     //Array de grafos para la sintaxis
@@ -35,6 +37,7 @@ public class AnalizadorSintactico {
     public AnalizadorSintactico(ArrayList<LineaCod> ln, Hashtable<String, Simbolo> tablaSimbolos) {
         codSM = new String[ln.size()];
         codM = new String[ln.size()];
+        nombreA = new String[ln.size()];
         this.tablaSimbolos = tablaSimbolos;
         re = new String[2];
         re[0] = re[1] = avAutomata = avGramatica = "";
@@ -698,8 +701,9 @@ public class AnalizadorSintactico {
 
     //El numero de linea se tiene que calcular con noLinea+1, ya que noLinea es del for que empieza en 0 y en 1
     public String valAutomata(String sent, int nl){
-        avAutomata += "\nAutomata de la linea "+(nl+1)+" , "+nombre+" . ";
+        avAutomata += "\n"+nombre+" Automata de la linea "+(nl+1)+" , "+" . ";
         //comLx es una variable que tiene los componente lexico de la sentencia
+
         String[]compLx = sent.split(" ");
         g.t = g.ini;
         //Variable auxiliar que almacena toda la sentencia que se va a eliminar
@@ -724,10 +728,10 @@ public class AnalizadorSintactico {
                 //Aguarda estados...
                 String f,nf;
 
-                avAutomata += "\n"+"->"+g.t.valor ;
+                avAutomata += "->"+g.t.valor ;
 
                 if(g.t.efin==true){nf= "Estado Final";
-                    avAutomata += "\n"+"El automata "+nombre+" Se encuentra en el estado -> "+g.t.valor + "( "+ nf+") " + "\n";
+                    avAutomata += "\n"+"El automata "+nombre+" Se encuentra en el estado -> "+g.t.valor + "( "+ nf+") %" + "\n";
 
                     continue;
                 }
@@ -751,7 +755,7 @@ public class AnalizadorSintactico {
                     +"(\""+lex(nl, i)+"\"). Solucion: colocar despues del \""+auxErrMsj(compLx[i-1])+"\" \""+text+"\".\n";
             String f;
             if(g.t.efin==false){f="Estado NO Final";
-                avAutomata += "\n"+"El automata "+nombre+" Se encuentra en el estado -> "+g.t.valor + "( "+ f+") " + "\n";
+                avAutomata += "\n"+"El automata "+nombre+" Se encuentra en el estado -> "+g.t.valor + "( "+ f+") %" + "\n";
 
 
             }

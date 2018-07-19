@@ -12,6 +12,7 @@ public class Automata extends AppCompatActivity {
 Token token;
 ImageView imagen;
 TextView producciones;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +36,9 @@ TextView producciones;
             imagen.setImageResource(R.drawable.palabras);
         }
         if(token.token.equals("garra")){
-            imagen.setImageResource(R.drawable.garra);
+            imagen.setImageResource(R.drawable.gizquierda);
         }
+
 
     }
 }
