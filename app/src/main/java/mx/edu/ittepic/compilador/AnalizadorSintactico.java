@@ -730,6 +730,27 @@ public class AnalizadorSintactico {
 
                 avAutomata += "->"+g.t.valor ;
 
+                try{
+
+                    if(g.t.arista.val.equals("NU")){
+                        String[] aux = re[1].split(";");
+                        String[] aux2 = aux[1].split(" ");
+                        String cod = aux2[2];
+                        String[] or = codSM[0].split(" ");
+
+                        if(!auxErr(g.t.arista.val).equals(tablaSimbolos.get(cod).tipo) ){
+                            re[0]+="\nError semantico, en la linea "+(nl+1)+". La variable debe ser de tipo ENTERO. Solucion: Coloque una variable valida \n";
+                        }else if(!cod.equals(or[1])){
+                            re[0]+="\nError semantico, en la linea "+(nl+1)+". La variable debe ser declarada. Solucion: Declare una variable valida \n";
+                        }
+                    }
+                }catch(NullPointerException e){
+
+                }catch (ArrayIndexOutOfBoundsException er){
+                    re[0]+="\nError semantico, en la linea "+(nl+1)+". La variable debe ser declarada. Solucion: Declare una variable valida \n";
+                }
+
+
                 if(g.t.efin==true){nf= "Estado Final";
                     avAutomata += "\n"+"El automata "+nombre+" Se encuentra en el estado -> "+g.t.valor + "( "+ nf+") %" + "\n";
 
@@ -814,6 +835,18 @@ public class AnalizadorSintactico {
             }}
         return "";
     }
+
+
+    public String auxErr(String val){
+        switch(val){
+            case "BOO":{return "BOOLEANO";}
+            case "NU":{return "ENTERO";}
+            case"LT":{return "CADENA";}
+        }
+        return val;
+    }
+
+
     //-----------------------------------------------------
 
     //Metodo auxiliar para los errores sintaticos, le mando como parametro el componente lexico y me retorna una cadena legible para personas

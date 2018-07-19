@@ -151,12 +151,6 @@ public class MainActivity extends AppCompatActivity {
                 consola.setText(textErr);
 
 
-
-
-                if(textErr.equals("")){
-                    consola.setText("Compilado con exito!!");
-                }
-
                 if(!re[1].equals("")){
                     textErr += re[1];
                 }
@@ -169,6 +163,10 @@ public class MainActivity extends AppCompatActivity {
                     gc.convrt(as.codSM, as.codM);
                     //Codigo optimizados
                     // String codigoOpt = gc.opt();
+                }
+
+                if(textErr.equals("")){
+                    consola.setText("Compilado con exito!!");
                 }
 
             }//onClick
