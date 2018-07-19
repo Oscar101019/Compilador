@@ -6,52 +6,37 @@ package mx.edu.ittepic.compilador.Automatas;
 
 public class Relacional {
     int contador=0;
-    String transiciones="";
+    public String transiciones="";
 
     public Relacional(){}
 
 
-    public boolean esRelacional(String palabra){
-        contador=0;
-        transiciones="";
+    public boolean esRelacional(String palabra) {
+        contador = 0;
+        transiciones = "q0,";
         boolean resultado = false;
-
-        if (esFinal(palabra)) {return false;}
-        if (palabra.charAt(contador) == '<'||palabra.charAt(contador) == '>') {
-            transiciones = transiciones + "q0,"+palabra.charAt(contador);
-            contador++;
-            if (esFinal(palabra)) {
-                transiciones = transiciones + "->q1";
-                return true;
-            }
-            if (palabra.charAt(contador) == '=') {
-                transiciones = transiciones + "->q1," + palabra.charAt(contador);
+        if(esFinal(palabra)){return false;}
+            char i=palabra.charAt(contador);
+            if(i==60||i==61||i==61){//<, >, = pueden ser finales
+                transiciones=transiciones+i+"->q1";
+                contador++;
+                if(esFinal(palabra)){
+                    return true;
+                }
+            }if(i==33){//!
+                transiciones=transiciones+i+"->q3";
                 contador++;
             }
-            if (esFinal(palabra)) {
-                transiciones = transiciones + "->q2";
-                return true;
-            }
-        }
-
-
-        if (palabra.charAt(contador) == '!'||palabra.charAt(contador) == '=') {
-            transiciones = transiciones + "q0," + palabra.charAt(contador);
+        i=palabra.charAt(contador);
+        if(i==60||i==61||i==61){//<, >, = finales
+            transiciones=transiciones+i+"->q2";
             contador++;
-
-            if (esFinal(palabra)) {return false;}
-            if (palabra.charAt(contador) == '=') {
-                transiciones = transiciones + "->q3," + palabra.charAt(contador);
-                contador++;
-            }
-            if (esFinal(palabra)) {
-                transiciones = transiciones + "->q2";
+            if(esFinal(palabra)){
                 return true;
             }
         }
         return resultado;
-    }
-
+    }//esRelacional
 
     public boolean esFinal(String palabra){
         if(palabra.length()==contador){

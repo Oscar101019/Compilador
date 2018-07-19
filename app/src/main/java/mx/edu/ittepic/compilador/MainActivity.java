@@ -36,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
     int linea;
     ListView LvSeg;
 
+    boolean comentario=false;
+
+
     Agrupacion agrupacion = new Agrupacion();
     Aritmeticos aritmeticos = new Aritmeticos();
     Carro carro=new Carro();
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     Garra garra = new Garra();
     Identificador identificador = new Identificador();
     Logico logico = new Logico();
+    Literal literal = new Literal();
     Numero numero = new Numero();
     Palabras palabras=new Palabras();
     Relacional relacional=new Relacional();
@@ -84,29 +88,40 @@ public class MainActivity extends AppCompatActivity {
                 String palabra="";
                 consola.setText("");
                 for(int i=0;i<cod.length();i++){
-                    /*antes de agregar el caracter
-                    * verificar que no sea un delimitador*/
-                    if(esDelimitador(cod.charAt(i)+"")){
-                        /*verificar que sea una palabra reservada, sino se toma como
-                        * identificador*/
-                        if(esPalabra(palabra)){
-                            palabra="";
-                        }if(esId(palabra)){
-                            palabra="";
-                        }else {
-                            /*error, algun caracter no pertenece al alfabeto*/
-                            String e="Error en la linea "+linea+" cadena no identificada: "+palabra
-                                    +"\n";
-                          consola.setText(e);
+                    if(!comentario) {
+                        /*antes de agregar el caracter
+                         * verificar que no sea un delimitador*/
+                        if (esDelimitador(cod.charAt(i) + "")) {
+                            /*verificar que sea una palabra reservada, sino se toma como
+                             * identificador*/
+                            if (esPalabra(palabra)) {
+                                palabra = "";
+                            }
+                            if (esId(palabra)) {
+                                palabra = "";
+                            } else {
+                                /*error, algun caracter no pertenece al alfabeto*/
+                                if (!palabra.equals("")) {
+                                    String e = "Error en la linea " + linea + " cadena no identificada: " + palabra
+                                            + "\n";
+                                    consola.setText(e);
+                                }
+                            }
+                        } else {
+                            palabra = palabra + cod.charAt(i);
                         }
-                    }else{
-                        palabra=palabra+cod.charAt(i);
-                    }
-                    /*verificar que sea una palabra reservada*/
-                    if(esPalabra(palabra.trim())){
+                        /*verificar que sea una palabra reservada*/
+                        if (esPalabra(palabra.trim())) {
+                            palabra = "";
+                        }
+                    }//no comentario
+                    String t=cod.charAt(i)+"";
+                    if(t.equals("\n")){
+                        comentario=false;
                         palabra="";
+                        linea++;
                     }
-                }
+                }//for
 
                 String codig = codigo.getText().toString();
                 AnalizadorLexico al = new AnalizadorLexico();
@@ -244,39 +259,53 @@ public class MainActivity extends AppCompatActivity {
             resultado=true;
             return resultado;
         }
+        if(literal.esCadena(p)){
+            agregarToken("cadena",p,linea+"",literal.transiciones);
+            resultado=true;
+            return resultado;
+        }
+        if(relacional.esRelacional(p)){
+            agregarToken("op_relacional",p,linea+"",relacional.transiciones);
+            resultado=true;
+            return resultado;
+        }
         return resultado;
     }
 
     public boolean esDelimitador(String p){
         /*los delimitadores son agrupacion, aritmeticos, logicos, ;, espacios*/
         boolean resultado=false;
-            if(agrupacion.esAgupacion(p)){
-                agregarToken("agrupacion",p,linea+"",agrupacion.transiciones);
-                resultado=true;
-                return resultado;
-            }
-            if(aritmeticos.esAritmetico(p)){
-                agregarToken("aritmetico",p,linea+"",aritmeticos.transiciones);
-                resultado=true;
-                return resultado;
-            }
-            if(logico.esLogico(p)){
-                agregarToken("op_logico",p,linea+"",logico.transiciones);
-                resultado=true;
-                return resultado;
-            }
-            if(p.equals(";")){
-                agregarToken("fin_linea",p,linea+"","q0,;->q1");
-                resultado=true;
-                return resultado;
-            }
-            if(p.equals(" ")){
-                resultado=true;
-            }
-            if(p.equals("\n")){
-                resultado=true;
-                linea++;
-            }
+        if(agrupacion.esAgupacion(p)){
+            agregarToken("agrupacion",p,linea+"",agrupacion.transiciones);
+            resultado=true;
+            return resultado;
+        }
+        if(aritmeticos.esAritmetico(p)){
+            agregarToken("aritmetico",p,linea+"",aritmeticos.transiciones);
+            resultado=true;
+            return resultado;
+        }
+        if(logico.esLogico(p)){
+            agregarToken("op_logico",p,linea+"",logico.transiciones);
+            resultado=true;
+            return resultado;
+        }
+        if(p.equals(";")){
+            agregarToken("fin_linea",p,linea+"","q0,;->q1");
+            resultado=true;
+            return resultado;
+        }
+        if(p.equals(" ")){
+            resultado=true;
+        }
+        if(p.equals("\n")){
+            resultado=true;
+            linea++;
+        }
+        if(p.equals("#")){
+            resultado=true;
+            comentario=true;
+        }
         return resultado;
     }//esDelimitador
 

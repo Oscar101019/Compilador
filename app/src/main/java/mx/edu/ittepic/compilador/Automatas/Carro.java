@@ -300,12 +300,10 @@ public class Carro {
                 contador++;
                 transiciones = transiciones + "->q44,E";
             }
-            if (esFinal(palabra)) {return false;}
             if (palabra.charAt(contador) == 'N') {
                 contador++;
                 transiciones = transiciones + "->q45,N";
             }
-            if (esFinal(palabra)) {return false;}
             if (palabra.charAt(contador) == 'D') {
                 contador++;
                 transiciones = transiciones + "->q46,D";

@@ -27,7 +27,7 @@ public class GeneradorDeCodigo {
             + " } \n"
 
             ;
-
+    public static String cod2="",cod3="";
 
 
 
@@ -38,32 +38,57 @@ public class GeneradorDeCodigo {
         String []lineasSM = codSM;
         String []aux1;
         String []aux2;
+
         for(int i = 0; i < lineasM.length; i++){
             aux1 =  lineasM[i].split(" ");
-            aux2 =  lineasSM[i].replace("VERDADERO", "true").replace("FALSO", "false").split(" ");
+            aux2 =  lineasSM[i].replace("VERDADERO ", "true").replace("FALSO ", "false").split(" ");
             switch(aux1[0]){
                 case "INICIO":{
                     cod += "void main"+"(){\n";
+
                     break;
                 }
                 case "CICLO":{
                     cod += "for(int i0000=0;i0000<"+aux2[2]+";i0000++ ){\n";
+
+
                     break;
                 }
-                case "ENTERO":{
-                    cod += lineasM[i].replace("ENTERO", "int")+"\n";
+                case "TD":{
+
+                   /* System.out.print(aux2[i+3]);
+                    System.out.print("\n"+lineasSM[i]);*/
+
+
+                    if ((lineasSM[i].substring(0,6)+" ").equals("ENTERO ")){
+                    cod += lineasSM[i].replace("ENTERO", "int")+"\n";
                     break;
-                }
-                case "BOOLEANO":{
-                    cod += lineasM[i].replace("BOOLEANO", "bool")+"\n";
+                    }
+
+                    if((lineasSM[i].substring(0,8)+" ").equals("BOOLEANO ")){
+                    cod += lineasSM[i].replace("VERDADERO ", "true").replace("FALSO ", "false").replace("BOOLEANO", "bool")+"\n";
+
+
+                        break;
+
+                    }
+                    
+
+                    if((lineasSM[i].substring(0,6)+" ").equals("CADENA ")){
+                    cod += lineasSM[i].replace("CADENA", "string")+"\n";
+                        break;
+
+
+
+                    }
+
                     break;
+
                 }
-                case "CADENA":{
-                    cod += lineasM[i].replace("CADENA", "string")+"\n";
-                    break;
-                }
+
+
                 case "SI":{
-                    cod += lineasM[i].replace("SI", "if")+"\n";
+                    cod += lineasSM[i].replace("SI", "if")+"\n";
                     break;
                 }
 
@@ -81,13 +106,17 @@ public class GeneradorDeCodigo {
 
 
 
+
                 default:{
                     cod+=lineasSM[i]+"\n";
                     break;
                 }
+
+
             }
+
         }
-        System.out.print(cod);
+        System.out.print(cod+cod2+cod3 );
         return cod+="}";
     }
 
