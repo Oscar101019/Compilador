@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -30,8 +32,8 @@ import mx.edu.ittepic.compilador.Automatas.Relacional;
 import mx.edu.ittepic.compilador.Automatas.Valor_booleano;
 
 public class MainActivity extends AppCompatActivity {
-    EditText codigo,consola;
-    ImageButton BtnCompilar,BtnTabla,BtnTablaS,BtnSeguimiento;
+    EditText codigo,consola,textlineas;
+    ImageButton BtnCompilar,BtnTabla,BtnTablaS,BtnSeguimiento,BtnIntermedio;
     Token tokens[];
     int linea;
     ListView LvSeg;
@@ -67,7 +69,42 @@ public class MainActivity extends AppCompatActivity {
         BtnCompilar = (ImageButton)findViewById(R.id.BtnCompilar);
         BtnTabla = (ImageButton) findViewById(R.id.BtnTabla);
         BtnTablaS = (ImageButton) findViewById(R.id.BtnTablaS);
+        BtnIntermedio = (ImageButton) findViewById(R.id.BtnIntermedio);
         LvSeg = (ListView)findViewById(R.id.LvSeguimiento);
+
+        textlineas=(EditText)findViewById(R.id.textlineas);
+        codigo.requestFocus();
+        codigo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                int lineas=codigo.getLineCount();
+                String cad="";
+
+                for(int j=1;j<=lineas;j++){
+                    if (j==lineas){
+                        cad+=j;
+                    }else{
+                        cad+=j+"\n";
+                    }
+                }
+
+                textlineas.setText("");
+                textlineas.setText(cad);
+                textlineas.requestFocus();
+                codigo.requestFocus();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         BtnCompilar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -187,6 +224,19 @@ public class MainActivity extends AppCompatActivity {
             }//onClick
 
 
+        });
+
+        BtnIntermedio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String verificar="";
+                verificar=consola.getText().toString();
+                if(verificar.equals("Compilado con exito!!")){
+                    Intent intent=new Intent(MainActivity.this,CodIntermedio.class);
+                    intent.putExtra("codigo",codigo.getText().toString());
+                    startActivity(intent);
+                }
+            }
         });
 
 

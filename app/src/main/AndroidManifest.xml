@@ -21,15 +21,16 @@
         <activity
             android:name=".Tabla"
             android:screenOrientation="landscape" />
-        <activity android:name=".Automata"
-            android:screenOrientation="landscape"
-            ></activity>
-        <activity android:name=".Automata2"
-            android:screenOrientation="landscape"
-            ></activity>
-        <activity android:name=".TablaS"
-            android:screenOrientation="landscape"
-            ></activity>
+        <activity
+            android:name=".Automata"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Automata2"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".TablaS"
+            android:screenOrientation="landscape" />
+        <activity android:name=".CodIntermedio"></activity>
     </application>
 
 </manifest>
