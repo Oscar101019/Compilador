@@ -426,7 +426,7 @@ public class AnalizadorSintactico {
         g.crearArista("q0", "q1", "CICLO");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
-        g.crearArista("q2", "q3", "ID");
+        //g.crearArista("q2", "q3", "ID");
         g.crearArista("q3", "q4", ")");
         g.crearArista("q4", "q5", "{");
 
@@ -448,7 +448,7 @@ public class AnalizadorSintactico {
         g.crearArista("q0", "q1", "GARRA.ABRIR");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
-        g.crearArista("q2", "q3", "ID");
+        //g.crearArista("q2", "q3", "ID");
         g.crearArista("q3", "q4", ")");
         g.crearArista("q4", "q5", ";");
 
@@ -469,7 +469,7 @@ public class AnalizadorSintactico {
         g.crearArista("q0", "q1", "GARRA.CERRAR");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
-        g.crearArista("q2", "q3", "ID");
+        //g.crearArista("q2", "q3", "ID");
         g.crearArista("q3", "q4", ")");
         g.crearArista("q4", "q5", ";");
     }
@@ -488,7 +488,7 @@ public class AnalizadorSintactico {
         g.crearArista("q0", "q1", "GARRA.DERECHA");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
-        g.crearArista("q2", "q3", "ID");
+        //g.crearArista("q2", "q3", "ID");
         g.crearArista("q3", "q4", ")");
         g.crearArista("q4", "q5", ";");
     }
@@ -507,7 +507,7 @@ public class AnalizadorSintactico {
         g.crearArista("q0", "q1", "GARRA.IZQUIERDA");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
-        g.crearArista("q2", "q3", "ID");
+        //g.crearArista("q2", "q3", "ID");
         g.crearArista("q3", "q4", ")");
         g.crearArista("q4", "q5", ";");
     }
@@ -525,7 +525,7 @@ public class AnalizadorSintactico {
         g.crearArista("q0", "q1", "GARRA.ARRIBA");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
-        g.crearArista("q2", "q3", "ID");
+        //g.crearArista("q2", "q3", "ID");
         g.crearArista("q3", "q4", ")");
         g.crearArista("q4", "q5", ";");
     }
@@ -543,7 +543,7 @@ public class AnalizadorSintactico {
         g.crearArista("q0", "q1", "GARRA.ABAJO");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
-        g.crearArista("q2", "q3", "ID");
+        //g.crearArista("q2", "q3", "ID");
         g.crearArista("q3", "q4", ")");
         g.crearArista("q4", "q5", ";");
     }
@@ -599,7 +599,7 @@ public class AnalizadorSintactico {
         g.crearArista("q0", "q1", "CARRO.IZQUIERDA");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
-        g.crearArista("q2", "q3", "ID");
+        //g.crearArista("q2", "q3", "ID");
         g.crearArista("q3", "q4", ")");
         g.crearArista("q4", "q5", ";");
     }
@@ -617,7 +617,7 @@ public class AnalizadorSintactico {
         g.crearArista("q0", "q1", "CARRO.DERECHA");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
-        g.crearArista("q2", "q3", "ID");
+        //g.crearArista("q2", "q3", "ID");
         g.crearArista("q3", "q4", ")");
         g.crearArista("q4", "q5", ";");
     }
@@ -635,7 +635,7 @@ public class AnalizadorSintactico {
         g.crearArista("q0", "q1", "CARRO.ATRAS");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
-        g.crearArista("q2", "q3", "ID");
+        //g.crearArista("q2", "q3", "ID");
         g.crearArista("q3", "q4", ")");
         g.crearArista("q4", "q5", ";");
     }
@@ -654,7 +654,7 @@ public class AnalizadorSintactico {
         g.crearArista("q0", "q1", "CARRO.ADELANTE");
         g.crearArista("q1", "q2", "(");
         g.crearArista("q2", "q3", "NU");
-        g.crearArista("q2", "q3", "ID");
+        //g.crearArista("q2", "q3", "ID");
         g.crearArista("q3", "q4", ")");
         g.crearArista("q4", "q5", ";");
     }
@@ -729,26 +729,6 @@ public class AnalizadorSintactico {
                 String f,nf;
 
                 avAutomata += "->"+g.t.valor ;
-
-                try{
-
-                    if(g.t.arista.val.equals("NU")){
-                        String[] aux = re[1].split(";");
-                        String[] aux2 = aux[1].split(" ");
-                        String cod = aux2[2];
-                        String[] or = codSM[0].split(" ");
-
-                        if(!auxErr(g.t.arista.val).equals(tablaSimbolos.get(cod).tipo) ){
-                            re[0]+="\nError semantico, en la linea "+(nl+1)+". La variable debe ser de tipo ENTERO. Solucion: Coloque una variable valida \n";
-                        }else if(!cod.equals(or[1])){
-                            re[0]+="\nError semantico, en la linea "+(nl+1)+". La variable debe ser declarada. Solucion: Declare una variable valida \n";
-                        }
-                    }
-                }catch(NullPointerException e){
-
-                }catch (ArrayIndexOutOfBoundsException er){
-                    re[0]+="\nError semantico, en la linea "+(nl+1)+". La variable debe ser declarada. Solucion: Declare una variable valida \n";
-                }
 
 
                 if(g.t.efin==true){nf= "Estado Final";

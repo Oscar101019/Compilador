@@ -56,8 +56,7 @@ public class GeneradorDeCodigo {
                 }
                 case "TD":{
 
-                   /* System.out.print(aux2[i+3]);
-                    System.out.print("\n"+lineasSM[i]);*/
+
 
 
                     if ((lineasSM[i].substring(0,6)+" ").equals("ENTERO ")){
@@ -86,9 +85,15 @@ public class GeneradorDeCodigo {
 
                 }
 
+                case "ID":{
+                    System.out.print(lineasSM[i]);
+                    cod += lineasSM[i].replace("VERDADERO ", "true").replace("FALSO ", "false")+"\n";
+                   break;
+
+                }
 
                 case "SI":{
-                    cod += lineasSM[i].replace("SI", "if")+"\n";
+                    cod += lineasSM[i].replace("SI", "if").replace("VERDADERO ", "true").replace("FALSO ", "false")+"\n";
                     break;
                 }
 
@@ -116,46 +121,12 @@ public class GeneradorDeCodigo {
             }
 
         }
-        System.out.print(cod+cod2+cod3 );
+        System.out.print(cod );
         return cod+="}";
     }
 
-    public static String opt(){
-        String codOp="";
-        String []sen = cod.split("\n");
-        int index=0;
-        boolean bandera = false;
-        for(int i =0; i < sen.length; i++){
-            if(sen[i].equals("public void setup(){")){
-                index = buscarLlave(i);
-                bandera = true;
-            }
-            if(i<=index && bandera){
-                continue;
-            }
-            codOp+=sen[i]+"\n";
-        }
-        return codOp+"}";
-    }
 
-    public static int buscarLlave(int nl){
-        int contador = 1;
-        String []sen2 = cod.split("\n");
-        sen2[nl] = sen2[nl].replaceFirst("\\{ ", "");
-        for(int i = nl; i < sen2.length; i++){
-            for(int j = 0; j < sen2[i].length(); j++){
-                if(sen2[i].charAt(j) == '{'){
-                    contador++;
-                }
-                if(sen2[i].charAt(j) == '}'){
-                    contador--;
-                }
-                if(contador == 0){
-                    return i;
-                }
-            }
-        }
-        return 0;
-    }
+
+
 
 }
