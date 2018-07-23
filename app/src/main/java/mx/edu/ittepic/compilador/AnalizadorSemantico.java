@@ -12,6 +12,7 @@ public class AnalizadorSemantico {
     String sentencias[];
     public String err[];
     public ArbolBinario ab;
+    public String seguimientoSem = "";
     
     public AnalizadorSemantico(String[]s){
         sentencias = s;
@@ -27,8 +28,11 @@ public class AnalizadorSemantico {
             sec = sec.substring(0, sec.length()-1);
         
             genSimb(aux[2].split(" "),aux[3].split(" "), Integer.parseInt(aux[0]));
-        
+
             Simbolo temp = ab.valExpresion(secAEnt(sec));
+
+            seguimientoSem = seguimientoSem+"\n"+sec+"\n"+aux[3];
+
             switch(aux[2].split(" ")[0]){
                 case "IF":{
                     if(!temp.tipo.equals("BOO") || temp.tipo.equals("ERR")){
@@ -60,6 +64,7 @@ public class AnalizadorSemantico {
                     }
                     String idObj = aux[3].split(" ")[1];
 
+
                     if(tablaSimbolos.get(idObj).valor!=null){
                         err[0] += "Error semantico, en la linea "+(Integer.parseInt(aux[0])+1)+". La variable \""+idObj+"\" ya ha sido declarada. Solucion: Verificar la declaracion anterior de la variable.\n";
                         break;
@@ -67,11 +72,6 @@ public class AnalizadorSemantico {
 
                     tablaSimbolos.get(idObj).valor = val;
                     break;
-                }
-                case "DURING":{
-                    if(!temp.tipo.equals("BOO") || temp.tipo.equals("ERR")){
-                        err[0] += "Error semantico, en la linea "+(Integer.parseInt(aux[0])+1)+". La estructura DURING solo acepta valores boolenos. Solucion: Verificar la condicion del DURING.\n";
-                    }
                 }
                 case "ID":{
                     if((temp.tipo+"").equals("ID")){
@@ -108,7 +108,7 @@ public class AnalizadorSemantico {
         }
         err[0]+=ab.err;
     }
-    
+
     public String auxErr(String val){
         switch(val){
             case "BOO":{return "BOOLEANO";}

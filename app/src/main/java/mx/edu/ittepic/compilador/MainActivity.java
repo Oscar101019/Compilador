@@ -57,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static String seguimientoAutomata = "";
     public static String seguimientoGramatica = "";
-    public  String[] nombre;
+    public static String seguimientoSemantico = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,7 +179,6 @@ public class MainActivity extends AppCompatActivity {
                 String []errAnalSint = as.compilar();
 
                 seguimientoAutomata = as.avAutomata;
-                seguimientoGramatica = as.avGramatica;
 
 
                 if(!errAnalSint[0].equals("")){
@@ -193,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
                     aSem.ab.tablaSimbolos = as.tablaSimbolos;
                     aSem.tablaSimbolos = as.tablaSimbolos;
                     aSem.compilar();
+                    seguimientoSemantico = aSem.seguimientoSem;
                 }
 
 
@@ -279,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
                 View mView1 = inflater.inflate(R.layout.activity_seguimiento, null);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setView(mView1).setTitle("Seguimiento").setMessage(seguimientoAutomata+"\n"+seguimientoGramatica)
+                builder.setView(mView1).setTitle("Seguimiento").setMessage(seguimientoAutomata+"\n"+seguimientoSemantico)
                         .setCancelable(true)
                         .setNeutralButton("Aceptar",
                                 new DialogInterface.OnClickListener() {

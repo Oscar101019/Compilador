@@ -816,17 +816,6 @@ public class AnalizadorSintactico {
         return "";
     }
 
-
-    public String auxErr(String val){
-        switch(val){
-            case "BOO":{return "BOOLEANO";}
-            case "NU":{return "ENTERO";}
-            case"LT":{return "CADENA";}
-        }
-        return val;
-    }
-
-
     //-----------------------------------------------------
 
     //Metodo auxiliar para los errores sintaticos, le mando como parametro el componente lexico y me retorna una cadena legible para personas

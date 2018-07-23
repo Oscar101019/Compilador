@@ -56,7 +56,7 @@
                 android:id="@+id/BtnTablaS"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/table"
+                android:background="@drawable/tabla_sint"
                 android:src="@android:color/transparent"
                 android:text="tabla"
                 android:tint="?attr/colorAccent" />
@@ -73,7 +73,7 @@
                 android:id="@+id/BtnIntermedio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/seg"
+                android:background="@drawable/martillo"
                 android:src="@android:color/transparent"
                 android:text="tabla" />
 
