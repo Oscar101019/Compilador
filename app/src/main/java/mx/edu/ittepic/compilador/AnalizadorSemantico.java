@@ -63,7 +63,7 @@ public class AnalizadorSemantico {
                         val+=arr[j];
                     }
                     String idObj = aux[3].split(" ")[1];
-
+                    ab.cod=ab.cod+idObj+" ";
 
                     if(tablaSimbolos.get(idObj).valor!=null){
                         err[0] += "Error semantico, en la linea "+(Integer.parseInt(aux[0])+1)+". La variable \""+idObj+"\" ya ha sido declarada. Solucion: Verificar la declaracion anterior de la variable.\n";
@@ -86,7 +86,8 @@ public class AnalizadorSemantico {
 
                         String tipo = (String)tablaSimbolos.get(aux[3].split(" ")[0]).tipo;
                         if(!auxErr(temp.tipo.toString()).equals(tipo) && !auxErr(temp.tipo.toString()).equals("ERR")){
-                            err[0] += "Error semantico, en la linea "+(Integer.parseInt(aux[0])+1)+". La estructura IF solo acepta valores boolenos. Solucion: Verificar la condicion del IF.\n";
+                            String idObj = aux[3].split(" ")[1];
+                            err[0] += "Error semantico, en la linea "+(Integer.parseInt(aux[0])+1)+". La variable es de tipo "+tablaSimbolos.get(idObj).tipo+". Solucion: Verificar la sentencia de inicializacion.\n";
                         }
 
                         String val = "";

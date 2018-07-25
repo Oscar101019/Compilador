@@ -17,7 +17,7 @@ public class ArbolBinario {
     private final String[]reglasSem= {"BOO OL BOO=BOO",
                                        "NU + NU=NU","NU - NU=NU","NU * NU=NU","NU / NU = NU","NU OR NU=BOO",
                                        "LT + LT=LT","LT + NU=LT","NU + LT=LT"};
-    
+    public String cod="";
     public String err;
     public int nl;
     
@@ -159,12 +159,33 @@ public class ArbolBinario {
     }
     
     private Simbolo recIn(NodoBinario nodo){
+        String[] rec = cod.split(" ");
+
         if(nodo.esHoja()){
             return (nodo.valor instanceof Simbolo)?(Simbolo)nodo.valor: new Simbolo(nodo.valor, nodo.valor, 0);
         }
         //Obtener operador 1.
         Simbolo op1 = recIn(nodo.nodHI);
-        
+
+        try {
+            for (int i = 0; i < rec.length; i++) {
+                if (tablaSimbolos.get(rec[i]).tipo.equals("ENTERO")) {
+                    op1.tipo = "NU";
+                    op1.valor = tablaSimbolos.get(rec[i]).valor;
+                }
+                if (tablaSimbolos.get(rec[i]).tipo.equals("CADENA")) {
+                    op1.tipo = "LT";
+                    op1.valor = tablaSimbolos.get(rec[i]).valor;
+                }
+                if (tablaSimbolos.get(rec[i]).tipo.equals("BOOLEANO")) {
+                    op1.tipo = "BOO";
+                    op1.valor = tablaSimbolos.get(rec[i]).valor;
+                }
+            }
+        }catch(NullPointerException er){
+
+        }
+
         if(op1.tipo.equals("ERR")){
             return new Simbolo("ERR","ERR",0);
         }
@@ -183,7 +204,26 @@ public class ArbolBinario {
             }
         }
         Simbolo op2 = recIn(nodo.nodHD);
-        
+
+        try {
+            for (int i = 0; i < rec.length; i++) {
+                if (tablaSimbolos.get(rec[i]).tipo.equals("ENTERO")) {
+                    op2.tipo = "NU";
+                    op2.valor = tablaSimbolos.get(rec[i]).valor;
+                }
+                if (tablaSimbolos.get(rec[i]).tipo.equals("CADENA")) {
+                    op2.tipo = "LT";
+                    op2.valor = tablaSimbolos.get(rec[i]).valor;
+                }
+                if (tablaSimbolos.get(rec[i]).tipo.equals("BOOLEANO")) {
+                    op2.tipo = "BOO";
+                    op2.valor = tablaSimbolos.get(rec[i]).valor;
+                }
+            }
+        }catch(NullPointerException er){
+
+        }
+
         if(op2.tipo.equals("ERR")){
             return new Simbolo("ERR","ERR",0);
         }
