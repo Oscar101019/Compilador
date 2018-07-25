@@ -809,7 +809,7 @@ public class AnalizadorSintactico {
         }
         if(!text.equals("") || !sent.contains(";" )){  String f;
             if(g.t.efin==false){f="Estado NO Final";
-                avAutomata += "\n"+"El automata "+nombre+" Se encuentra en el estado -> "+g.t.valor + "( "+ f+") " + "\n";
+                avAutomata += "\n"+"El automata "+nombre+" Se encuentra en el estado -> "+g.t.valor + "( "+ f+") % " + "\n";
 
 
             }}
