@@ -21,7 +21,7 @@ import java.io.OutputStreamWriter;
 public class CodIntermedio extends AppCompatActivity {
 
     Button btn;
-    EditText codigo1,codigo2,codigo3;
+    EditText codigo1,codigo2,codigo3,codigo4;
     String cad1="";
     String acm="";
     EditText nombrearchivo;
@@ -33,6 +33,7 @@ public class CodIntermedio extends AppCompatActivity {
         codigo1=(EditText)findViewById(R.id.codigo1);
         codigo2=(EditText)findViewById(R.id.codigo2);
         codigo3=(EditText)findViewById(R.id.codigo3);
+        codigo4=(EditText)findViewById(R.id.codigo4);
         nombrearchivo=new EditText(this);
         Intent intent = getIntent();
         String abc = intent.getStringExtra("codigo");
@@ -45,116 +46,144 @@ public class CodIntermedio extends AppCompatActivity {
         });
         //evaluar();
         inter();
+        eliminarcosasquenosirven();
         evaluar();
         guardar();
 
     }
+    public void inter(){
+        String[] vect=codigo1.getText().toString().split("\n");
+        String cad="";
+        String acm="";
+        String acm2="";
+        String tmp="",tmp2="";
+        char a='}';
+        char b='{';
+        char c='(';
+        char d=')';
+        int e,f,termina = 0;
+        String[] abc;
+        String bcd="";
+        int letranumero=0;
+        for(int i=0;i<vect.length;i++){
+            cad=vect[i];
+            if(cad.indexOf("CICLO")!=-1){
+                e=cad.indexOf(c);
+                f=cad.indexOf(d);
+                String numero=cad.substring(e + 1, f);
+                try {
+                    termina = Integer.parseInt(numero);
 
-/*
-    public void optimizar(){
-        String[] vec=codigo1.getText().toString().split("\n");
-        for(int i=0;i<vec.length;i++){
-            if(vec[i].equals()){
-
-            }
-        }
-        if(cad[i]==cad[i+1])
-    }
-*/
-
-
-public void inter(){
-    String[] vect=codigo1.getText().toString().split("\n");
-    String cad="";
-    String acm="";
-    String acm2="";
-    String tmp="",tmp2="";
-    char a='}';
-    char b='{';
-    char c='(';
-    char d=')';
-    int e,f,termina = 0;
-    String[] abc;
-    String bcd="";
-    int letranumero=0;
-    for(int i=0;i<vect.length;i++){
-        cad=vect[i];
-        if(cad.indexOf("CICLO")!=-1){
-            e=cad.indexOf(c);
-            f=cad.indexOf(d);
-            String numero=cad.substring(e + 1, f);
-            try {
-                termina = Integer.parseInt(numero);
-
-            }catch (NumberFormatException e1){
-                for(int l=i-1;l>=0;l--){
-                    if(vect[l].indexOf(numero)!=-1){
-                        abc=vect[l].split("=");
-                        bcd=abc[1];
-                        bcd=bcd.replaceAll(";","");
-                        letranumero=Integer.parseInt(bcd);
+                }catch (NumberFormatException e1){
+                    for(int l=i-1;l>=0;l--){
+                        if(vect[l].indexOf(numero)!=-1){
+                            abc=vect[l].split("=");
+                            bcd=abc[1];
+                            bcd=bcd.replaceAll(";","");
+                            letranumero=Integer.parseInt(bcd);
+                        }
                     }
+                    termina=letranumero;
                 }
-                termina=letranumero;
-            }
-            for (int j=i;j<vect.length;j++){
-                if(vect[j].indexOf(a)!=-1){
-                    acm+=vect[j];
-                    break;
-                }
-                acm+=vect[j]+"\n";
-
-            }
-
-            int ini=acm.indexOf(b);
-            int fin=acm.indexOf(a);
-            if(ini!=-1 && fin!=-1){
-                tmp=acm.substring(ini+2,fin-1);
-            }
-            if(termina!=0){
-                for(int k=0;k<termina;k++){
-                    if(k==termina-1){
-                        tmp2+=tmp;
-                    }else{
-                        tmp2+=tmp+"\n";
+                for (int j=i;j<vect.length;j++){
+                    if(vect[j].indexOf(a)!=-1){
+                        acm+=vect[j];
+                        break;
                     }
+                    acm+=vect[j]+"\n";
 
-                }//for para repetir la cadena
-            }//if verificar que las veces que se repitira son >0
+                }
 
-        }//if ciclo
+                int ini=acm.indexOf(b);
+                int fin=acm.indexOf(a);
+                if(ini!=-1 && fin!=-1){
+                    tmp=acm.substring(ini+2,fin-1);
+                }
+                if(termina!=0){
+                    for(int k=0;k<termina;k++){
+                        if(k==termina-1){
+                            tmp2+=tmp;
+                        }else{
+                            tmp2+=tmp+"\n";
+                        }
+
+                    }//for para repetir la cadena
+                }//if verificar que las veces que se repitira son >0
+
+            }//if ciclo
 
 
 
-    }//for recorrer la cad
+        }//for recorrer la cad
 
-    acm2=codigo1.getText().toString();
-    codigo3.setText(acm);
-    acm2=acm2.replace(acm+"",""+tmp2);
-
-
-
-    codigo2.setText(acm2);
-
-}
+        acm2=codigo1.getText().toString();
+        //codigo3.setText(acm);
+        acm2=acm2.replace(acm+"",""+tmp2);
 
 
-public void optimizado(){
-    char a='(';
-    String[] vec=codigo2.getText().toString().split("\n");
-    String[] v1,v2;
-    for (int i=0;i<vec.length;i++){
-        if(i==vec.length-1){
-            v2=vec[i+1].split(""+a);
-        }
-        v1=vec[i].split(""+a);
-        v2=vec[i+1].split(""+a);
-        if(v1[0].equals(v2[0])){
 
-        }
+        codigo2.setText(acm2);
 
     }
-}
+
+
+    private void eliminarcosasquenosirven() {
+        String ac="",cad11="";
+
+        String[] cod=codigo2
+                .getText().toString().split("\n");
+        for (int i=0;i<cod.length;i++) {
+            cad11 = cod[i];
+            char w = '#';
+            int borrar = cad11.indexOf(w);
+
+            if (borrar != -1) {
+                String temp2 = cad11.substring(0, borrar);
+                cad11 = temp2;
+
+            }
+
+            if (cad11.indexOf("RUTA") != -1) {
+                cad11 = "";
+                for (int k = i; k < cod.length; k++) {
+                    if (cod[k].indexOf('}') != -1) {
+                        cod[k] = cod[k].replace("}", "");
+                        break;
+                    }
+                }
+
+
+            }
+            if (cad11.indexOf("INICIO") != -1) {
+                cad11 = "";
+                for (int k = i; k < cod.length; k++) {
+                    if (cod[k].indexOf('}') != -1) {
+                        cod[k] = cod[k].replace("}", "");
+                        break;
+                    }
+                }
+
+
+            }
+            if(i==cod.length-1){
+                ac+=cad11;
+            }else{
+                ac+=cad11+"\n";
+            }
+
+        }
+
+        codigo4.setText(ac);
+    }
+
+
+
+
+
+
+
+
+
 
 
     public void evaluar() {
@@ -177,33 +206,11 @@ public void optimizado(){
                 "  pinMode(MotorAdelanteDerecha,OUTPUT);\n" +
                 "  pinMode(MotorAdelanteIzquierda,OUTPUT);\n" +
                 "  pinMode(led,OUTPUT);\n" ;
-        String[] cod=codigo2
+        String[] cod=codigo4
                 .getText().toString().split("\n");
         for (int i=0;i<cod.length;i++){
             cad1=cod[i];
-            char w='#';
-            int borrar=cad1.indexOf(w);
 
-            if(borrar!=-1){
-                String temp2=cad1.substring(0,borrar);
-                cad1=temp2;
-
-            }
-
-            //empieza
-
-            //termina
-            if(cad1.indexOf("RUTA")!=-1) {
-                cad1="";
-                for(int k=i;k<cod.length;k++){
-                    if(cod[k].indexOf('}')!=-1){
-                        cod[k]=cod[k].replace("}","");
-                        break;
-                    }
-                }
-
-
-            }
             /*
             INICIO prueba{
 ENTERO a=1;
@@ -222,17 +229,7 @@ CICLO(3){
   CARRO.ATRAS(2);
 }
 }*/
-            if(cad1.indexOf("INICIO")!=-1) {
-                cad1="";
-                for(int k=i;k<cod.length;k++){
-                    if(cod[k].indexOf('}')!=-1){
-                        cod[k]=cod[k].replace("}","");
-                        break;
-                    }
-                }
 
-
-            }
 
             cad1=cad1.replaceAll("SINO","else");
             cad1=cad1.replaceAll("ENTERO","int");

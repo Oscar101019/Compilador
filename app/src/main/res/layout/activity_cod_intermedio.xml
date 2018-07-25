@@ -33,6 +33,16 @@
                 android:id="@+id/codigo2"
                 android:background="@color/colorAccent"
                 />
+
+            <EditText
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top|left"
+                android:hint="codigo arduino"
+                android:id="@+id/codigo4"
+                android:background="@color/colorAccent2"
+                />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -41,6 +51,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@color/colorPrimaryDark"
                 android:id="@+id/codigo3"
+
                 />
             <Button
                 android:layout_width="wrap_content"

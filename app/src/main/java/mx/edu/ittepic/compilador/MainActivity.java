@@ -1,8 +1,13 @@
 package mx.edu.ittepic.compilador;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -64,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        permisos();
         codigo = findViewById(R.id.ETcodigo);
         consola = findViewById(R.id.consola);
         BtnSeguimiento = (ImageButton)findViewById(R.id.BtnSeguimiento);
@@ -295,6 +301,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void permisos() {
+        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!= PackageManager.PERMISSION_GRANTED){
+            if(ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+
+            }else {
+                ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+            }
+        }
     }
 
 
