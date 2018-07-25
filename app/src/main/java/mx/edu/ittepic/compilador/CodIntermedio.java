@@ -11,8 +11,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 public class CodIntermedio extends AppCompatActivity {
@@ -37,12 +40,14 @@ public class CodIntermedio extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inter();
-                evaluar();
-                //guardar();
+
             }
         });
         //evaluar();
+        inter();
+        evaluar();
+        guardar();
+
     }
 
 /*
@@ -349,35 +354,53 @@ CICLO(3){
         cad2="";
     }//evaluar
     public void guardar(){
-        final String[] miarchivo = {""};
+        AlertDialog.Builder pregunta=new AlertDialog.Builder(CodIntermedio.this);
 
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(CodIntermedio.this);
-        builder.setView(nombrearchivo).setTitle("Guardar Como").setMessage("Nombre Archivo")
-                .setCancelable(true)
-                .setNeutralButton("Aceptar",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                miarchivo[0] =nombrearchivo.getText().toString();
-                                try
-                                {
-                                    OutputStreamWriter fout=
-                                            new OutputStreamWriter(
-                                                    openFileOutput(miarchivo[0]+".ino", Context.MODE_PRIVATE));
+        pregunta.setTitle("Guardar Como").setMessage("Nombre del Archivo").setView(nombrearchivo).setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String textonombre=nombrearchivo.getText().toString();
+                if(textonombre.isEmpty()==false) {
+                    //guardar
+                    FileOutputStream flujo=null;
+                    OutputStreamWriter escritor = null;
+                    try
+                    {
+                        File ruta = Environment.getExternalStorageDirectory();
+                        File fichero = new File(ruta.getAbsolutePath(), textonombre+".ino");
+                        flujo =new FileOutputStream(fichero);
+                        escritor=new OutputStreamWriter(flujo);
+                        escritor.write(codigo3.getText().toString());
+                    }
+                    catch (Exception e)
+                    {
+                        e.printStackTrace();
 
-                                    fout.write(codigo3.getText().toString());
-                                    fout.close();
-                                }
-                                catch (Exception ex)
-                                {
-                                    Log.e("Ficheros", "Error al escribir fichero en la memoria interna");
-                                }
-                                dialog.cancel();
+                    }
+                    finally
+                    {
+                        try {
+                            if(escritor!=null)
+                                escritor.close();
+                            Toast.makeText(CodIntermedio.this, "¡Archivo guardado correctamente!", Toast.LENGTH_SHORT).show();
 
-                            }
-                        });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
 
-        android.app.AlertDialog alert = builder.create();
-        alert.show();
+                }else{
+                    Toast.makeText(CodIntermedio.this,"no se pudo guardar el archivo",Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(CodIntermedio.this,"Se Cancelo el guardado",Toast.LENGTH_SHORT).show();
+
+            }
+        }).show();
+
 
 
 

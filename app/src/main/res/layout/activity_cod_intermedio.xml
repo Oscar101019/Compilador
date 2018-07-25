@@ -48,6 +48,7 @@
                 android:layout_gravity="center"
                 android:text="compilar"
                 android:id="@+id/btn"
+                android:visibility="invisible"
                 />
         </LinearLayout>
     </ScrollView>
