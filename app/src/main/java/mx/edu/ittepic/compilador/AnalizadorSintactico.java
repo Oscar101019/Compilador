@@ -704,6 +704,50 @@ public class AnalizadorSintactico {
         avAutomata += "\n"+nombre+" Automata de la linea "+(nl+1)+" , "+" . ";
         //comLx es una variable que tiene los componente lexico de la sentencia
 
+        if(nl==0){
+            int numLnEnc=0,numLnApa=0,numL=0,otro=0,cont1=0,cont2=0;
+            String inst="";
+            for(int j=0; j<codSM.length;j++){
+                String[] cod = codSM[j].split(" ");
+                if(cod[0].equals("CARRO.ENCENDER")){
+                    numLnEnc=(j+1);
+                    numL=j;
+                    cont1++;
+                }
+                if(cod[0].equals("CARRO.APAGAR")){
+                    numLnApa =(j+1);
+                    numL=j;
+                    cont2++;
+                }
+                if(cod[0].equals("CARRO.ADELANTE") || cod[0].equals("CARRO.ATRAS") || cod[0].equals("CARRO.IZQUIERDA") || cod[0].equals("CARRO.DERECHA") || cod[0].equals("GARRA.ARRIBA") || cod[0].equals("GARRA.ABAJO") || cod[0].equals("GARRA.ABRIR") || cod[0].equals("GARRA.CERRAR")){
+                    otro=(j+1);
+                    if(numLnEnc==0 || numLnApa!=0) {
+                        if (numLnEnc > otro || otro > numLnApa) {
+                            re[0] += "Error semantico en la linea "+ otro + ".Intruccion "+cod[0]+" invalida. Solucion: colocar la instruccion despues de CARRO.ENCENDER y antes de CARRO.APAGAR\n";
+                        }
+                    }
+                }
+
+            }
+            if (numLnEnc>numLnApa && numLnApa!=0) {
+                re[0] += "Error semantico en la linea " + (numL + 1) + ".Intruccion invalida debe colocar la instruccion CARRO.ENCENDER primero . Solucion: colocar la instruccion CARRO.ENCENDER\n";
+            }
+            if(numLnApa>=0 && numLnEnc==0){
+                re[0] += "Error semantico en la linea " + (numL + 1) + ".Intruccion invalida debe colocar la instruccion CARRO.ENCENDER. Solucion: colocar la instruccion CARRO.ENCENDER\n";
+            }
+            if(numLnEnc>=0 && numLnApa==0){
+                re[0] += "Error semantico en la linea " + (numL + 1) + ".Intruccion invalida debe colocar la instruccion CARRO.APAGAR. Solucion: colocar la instruccion CARRO.APAGAR despues de CARRO.ENCENDER\n";
+            }
+            if(cont1>1){
+                re[0] += "Error semantico en la linea " + (numL + 1) + ".Intruccion invalida ya se ha utilizado CARRO.ENCENDER. Solucion: colocar la instruccion CARRO.ENCENDER solo una vez\n";
+            }
+            if(cont2>1){
+                re[0] += "Error semantico en la linea " + (numL + 1) + ".Intruccion invalida ya se ha utilizado CARRO.APAGAR. Solucion: colocar la instruccion CARRO.APAGAR solo una vez\n";
+
+            }
+
+        }
+
         String[]compLx = sent.split(" ");
         g.t = g.ini;
         //Variable auxiliar que almacena toda la sentencia que se va a eliminar
@@ -730,6 +774,21 @@ public class AnalizadorSintactico {
 
                 avAutomata += "->"+g.t.valor ;
 
+                try {
+                    String[] rec = codSM[nl].split(" ");
+                    if (rec[0].equals("GARRA.ABRIR") || rec[0].equals("GARRA.CERRAR") || rec[0].equals("GARRA.ARRIBA") || rec[0].equals("GARRA.ABAJO") ){
+                        try {
+                            if (g.t.arista.val.equals("NU") ){
+                                if (!rec[2].equals("0") && !rec[2].equals("1") && !rec[2].equals("2") && !rec[2].equals("3")) {
+                                    re[0]+="Error semantico en la linea "+(nl+1)+". Valor invalido dentro del parametro. Solucion inserte un valor valido dentro del rango 0-3\n";
+                                }
+                            }
+                        } catch (Exception e) {
+                        }
+                    }
+                }catch (Exception e){
+
+                }
 
                 if(g.t.efin==true){nf= "Estado Final";
                     avAutomata += "\n"+"El automata "+nombre+" Se encuentra en el estado -> "+g.t.valor + "( "+ nf+") %" + "\n";
