@@ -19,7 +19,21 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 public class CodIntermedio extends AppCompatActivity {
-
+    /*
+INICIO a{
+CICLO(3){
+CARRO.ADELANTE(4);#ESTO SE REPIRE 3X4
+}
+CICLO(2){
+CARRO.ATRAS(3);#ESTO SE REPITE 2X3
+}
+CICLO(4){
+CARRO.IZQUIERDA(3);#ESTO SE REPITE 4X3
+}
+CICLO(5){
+CARRO.DERECHA(3);#5X3
+}
+}*/
     Button btn;
     EditText codigo1,codigo2,codigo3,codigo4;
     String cad1="";
@@ -142,6 +156,139 @@ public class CodIntermedio extends AppCompatActivity {
                 cad11 = temp2;
 
             }
+            try {
+                if(cod[i].indexOf("ENTERO")!=-1){
+                    if(cod[i+1].indexOf("ENTERO")!=-1){
+                        if(cod[i].equals(cod[i+1])){
+                            cod[i+1]="";
+                        }
+
+                    }
+                }
+
+                if(cod[i].indexOf("CADENA")!=-1){
+                    if(cod[i+1].indexOf("CADENA")!=-1){
+                        if(cod[i].equals(cod[i+1])){
+                            cod[i+1]="";
+                        }
+
+                    }
+                }
+                if(cod[i].indexOf("BOOLEANO")!=-1){
+                    if(cod[i+1].indexOf("BOOLEANO")!=-1){
+                        if(cod[i].equals(cod[i+1])){
+                            cod[i+1]="";
+                        }
+
+                    }
+                }
+
+
+
+
+            }catch (ArrayIndexOutOfBoundsException e){
+
+            }
+
+            if(cad11.indexOf("CARRO.ADELANTE")!=-1){
+                if(cod[i+1].indexOf("CARRO.ADELANTE")!=-1){
+                    char a='(';
+                    char b=')';
+                    int c=cod[i].indexOf(a);
+                    int d=cod[i].indexOf(b);
+                    int c2=cod[i+1].indexOf(a);
+                    int d2=cod[i+1].indexOf(b);
+                    String te = cod[i].substring(c+1 , d);
+                    String act = cod[i].substring(c , d+1);
+
+                    String te2 = cod[i+1].substring(c2+1 , d2);
+                    String sig = cod[i+1].substring(c2 , d2+1);
+                    int aux=Integer.parseInt(te);
+                    int aux2=Integer.parseInt(te2);
+                    int suma=aux+aux2;
+                    if(i==cod.length-1){
+                        cod[i]=cod[i].replace(aux+"",suma+"");
+                    }else {
+                        cod[i+1]=cod[i+1].replace(sig,'('+""+suma+""+')'+"");
+                    }
+                    cad11="";
+                }
+            }
+
+            if(cad11.indexOf("CARRO.ATRAS")!=-1){
+                if(cod[i+1].indexOf("CARRO.ATRAS")!=-1){
+                    char a='(';
+                    char b=')';
+                    int c=cod[i].indexOf(a);
+                    int d=cod[i].indexOf(b);
+                    int c2=cod[i+1].indexOf(a);
+                    int d2=cod[i+1].indexOf(b);
+                    String te = cod[i].substring(c+1 , d);
+                    String act = cod[i].substring(c , d+1);
+
+                    String te2 = cod[i+1].substring(c2+1 , d2);
+                    String sig = cod[i+1].substring(c2 , d2+1);
+                    int aux=Integer.parseInt(te);
+                    int aux2=Integer.parseInt(te2);
+                    int suma=aux+aux2;
+                    if(i==cod.length-1){
+                        cod[i]=cod[i].replace(aux+"",suma+"");
+                    }else {
+                        cod[i+1]=cod[i+1].replace(sig,'('+""+suma+""+')'+"");
+                    }
+                    cad11="";
+                }
+            }
+
+            if(cad11.indexOf("CARRO.DERECHA")!=-1){
+                if(cod[i+1].indexOf("CARRO.DERECHA")!=-1){
+                    char a='(';
+                    char b=')';
+                    int c=cod[i].indexOf(a);
+                    int d=cod[i].indexOf(b);
+                    int c2=cod[i+1].indexOf(a);
+                    int d2=cod[i+1].indexOf(b);
+                    String te = cod[i].substring(c+1 , d);
+                    String act = cod[i].substring(c , d+1);
+
+                    String te2 = cod[i+1].substring(c2+1 , d2);
+                    String sig = cod[i+1].substring(c2 , d2+1);
+                    int aux=Integer.parseInt(te);
+                    int aux2=Integer.parseInt(te2);
+                    int suma=aux+aux2;
+                    if(i==cod.length-1){
+                        cod[i]=cod[i].replace(aux+"",suma+"");
+                    }else {
+                        cod[i+1]=cod[i+1].replace(sig,'('+""+suma+""+')'+"");
+                    }
+                    cad11="";
+                }
+            }
+
+            if(cad11.indexOf("CARRO.IZQUIERDA")!=-1){
+                if(cod[i+1].indexOf("CARRO.IZQUIERDA")!=-1){
+                    char a='(';
+                    char b=')';
+                    int c=cod[i].indexOf(a);
+                    int d=cod[i].indexOf(b);
+                    int c2=cod[i+1].indexOf(a);
+                    int d2=cod[i+1].indexOf(b);
+                    String te = cod[i].substring(c+1 , d);
+                    String act = cod[i].substring(c , d+1);
+
+                    String te2 = cod[i+1].substring(c2+1 , d2);
+                    String sig = cod[i+1].substring(c2 , d2+1);
+                    int aux=Integer.parseInt(te);
+                    int aux2=Integer.parseInt(te2);
+                    int suma=aux+aux2;
+                    if(i==cod.length-1){
+                        cod[i]=cod[i].replace(aux+"",suma+"");
+                    }else {
+                        cod[i+1]=cod[i+1].replace(sig,'('+""+suma+""+')'+"");
+                    }
+                    cad11="";
+                }
+            }
 
             if (cad11.indexOf("RUTA") != -1) {
                 cad11 = "";
@@ -165,7 +312,7 @@ public class CodIntermedio extends AppCompatActivity {
 
 
             }
-            if(i==cod.length-1){
+            if(i==cod.length-1 || cad11.isEmpty()){
                 ac+=cad11;
             }else{
                 ac+=cad11+"\n";
